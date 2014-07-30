@@ -6,14 +6,11 @@ Use DNS SRV records to discover services by name and protocol.
 
 """
 from collections import namedtuple
-import logging
 from dns import resolver
 import socket
 
 __version__ = (0, 1, 0)
 version = '%s.%s.%s' % __version__
-
-LOGGER = logging.getLogger(__name__)
 
 SRV = namedtuple('SRV', ['host', 'port', 'priority', 'weight'])
 
@@ -81,5 +78,4 @@ def _query_srv_records(fqdn):
             resolver.NotAbsolute,
             resolver.NoRootSOA,
             resolver.NXDOMAIN) as error:
-        LOGGER.error('Error querying SRV for %s: %r', fqdn, error)
         raise SRVQueryFailure(error.__class__.__name__)
